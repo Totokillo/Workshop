@@ -7,9 +7,8 @@
 
     public class InsertManageUserRequest
 {
-    public int StudentId { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string SurName { get; set; } = string.Empty;
+    public string FisrtName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
     public string? Email { get; set; } = string.Empty;
     public string PassWord { get; set; } = string.Empty;
     public DateTime? BirthDay { get; set; }
@@ -18,9 +17,10 @@
 public class UpdateManageUserRequest
 {
     public int Id { get; set; }
+    public string? FisrtName { get; set; } = string.Empty;
+    public string? LastName { get; set; } = string.Empty;
     public string? Email { get; set; } = string.Empty;
-    public string? PassWord { get; set; } = string.Empty;
-    public DateTime? BirthDate { get; set; }
+    public DateTime? BirthDay { get; set; }
 }
 
 public class DeleteManageUserRequest
@@ -30,7 +30,6 @@ public class DeleteManageUserRequest
 
 public class SelectManageUserRequest
 {
-    public int? StudentId { get; set; }
-    public string? Name { get; set; } = string.Empty;
+    public int? Id { get; set; }
 }
 

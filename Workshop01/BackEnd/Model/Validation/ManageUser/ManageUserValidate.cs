@@ -11,7 +11,7 @@ namespace Workshop01.BackEnd.Model.Validation.ManageUser;
 {
     public InsertManageUserValidate()
     {
-        RuleFor(R => R.StudentId).NotEmpty().WithMessage("{PropertyName} ต้องระบุค่า").NotNull().WithMessage("{PropertyName} ต้องไม่ null");
+        //RuleFor(R => R.StudentId).NotEmpty().WithMessage("{PropertyName} ต้องระบุค่า").NotNull().WithMessage("{PropertyName} ต้องไม่ null");
     }
 }
 

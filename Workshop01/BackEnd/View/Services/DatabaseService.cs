@@ -20,9 +20,8 @@ namespace Workshop01.BackEnd.View.Services;
         {
             string queryTable = @" CREATE TABLE STUDENT ( 
                                                              Id integer PRIMARY KEY AUTOINCREMENT,
-                                                             StudentId integer NOT NULL,
-                                                             Name varchar(255) NOT NULL,
-                                                             SurName varchar(255) NOT NULL,
+                                                             FirstName varchar(255) NOT NULL,
+                                                             LastName varchar(255) NOT NULL,
                                                              Email varchar(255)  NULL,
                                                              PassWord varchar(255) NOT NULL,
                                                              BirthDay DATETIME NULL

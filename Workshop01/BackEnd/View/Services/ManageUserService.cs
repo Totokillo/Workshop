@@ -22,28 +22,27 @@ namespace Workshop01.BackEnd.View.Services;
         using var connection = new SqliteConnection(_configuration["DatabaseName"]);
         try
         {
-            if(request.StudentId != 0 )
+            if(request.Email is not null  )
             {
-                string QuerySelect = @" SELECTNAME ||' '|| SURNAME as studentname  FROM STUDENT WHERE STUDENTID = @STUDENTID ";
+                string QuerySelect = @" SELECT FirstName ||' '|| LastName as studentname  FROM STUDENT WHERE EMAIL = @EMAIL ";
                 string DataValidate = await connection.QueryFirstOrDefaultAsync<string>(QuerySelect , new
                 {
-                    STUDENTID = request.StudentId,
+                    EMAIL = request.Email,
                 });
                 if (DataValidate != null)
                 {
-                    throw new Exception("มีรหัสพนักงานนี้แล้ว");
+                    throw new Exception("มี email ซ้ำ");
                 }
             }
 
             string QueryInsert = @" INSERT INTO STUDENT 
-                                            (StudentId , Name , Surname , Email , Password , BirthDay)
-                                    VALUES  ( @STUDENTID , @NAME , @SURNAME ,@EMAIL, @PASSWORD , @BIRTHDATE ) ";
+                                            ( FirstName , LastName , Email , Password , BirthDay)
+                                    VALUES  (  @FIRSTNAME , @LASTNAME ,@EMAIL, @PASSWORD , @BIRTHDATE ) ";
 
             await connection.ExecuteAsync(QueryInsert , new
             {
-                STUDENTID = request.StudentId,
-                NAME = request.Name,
-                SURNAME = request.SurName,
+                FIRSTNAME = request.FisrtName,
+                LASTNAME = request.LastName,
                 EMAIL = request.Email,
                 PASSWORD = request.PassWord,
                 BIRTHDATE = request.BirthDay
@@ -61,22 +60,12 @@ namespace Workshop01.BackEnd.View.Services;
         {
             ManageUserList result = new();
 
-            string QuerySelect = @" SELECT ID , STUDENTID , NAME ||' '|| SURNAME as studentname , Email , PassWord , BirthDay FROM STUDENT WHERE 1 = 1 ";
+            string QuerySelect = @" SELECT ID  , FirstName ||' '|| LastName as Username , Email  , BirthDay FROM STUDENT WHERE ID = @ID ";
 
-           if(request.StudentId != 0)
-            {
-                QuerySelect += @" AND STUDENTID = @STUDENTID ";
-            }
-
-           if(request.Name is not null)
-            {
-                QuerySelect += @" AND NAME = @NAME ";
-            }
 
             var DataSelect = await connection.QueryAsync<ManageUserModel>(QuerySelect, new
             {
-                STUDENTID = request.StudentId,
-                NAME = request.Name,
+                ID = request.Id,
             });
 
 
@@ -93,16 +82,18 @@ namespace Workshop01.BackEnd.View.Services;
         try
         {
             string QueryUpdate = @" Update STUDENT
-                                    SET Email = @EMAIL ,
-                                        PassWord = @PASSWORD ,
+                                    SET Firstname = @FIRSTNAME,
+                                        Lastname = @LASTNAME,
+                                        Email = @EMAIL ,
                                         BirthDay = @BIRTHDAY
                                     WHERE id = @ID ";
 
             await connection.ExecuteAsync(QueryUpdate , new
             {
+                FIRSTNAME = request.FisrtName,
+                LASTNAME = request.LastName,
                 EMAIL = request.Email,
-                PASSWORD = request.PassWord,
-                BIRTHDAY = request.BirthDate,
+                BIRTHDAY = request.BirthDay,
                 ID = request.Id
             });
 
@@ -139,12 +130,12 @@ namespace Workshop01.BackEnd.View.Services;
         {
 
             string QueryInsert = @" INSERT INTO CHECKIN 
-                                            (StudentId , Name  )
-                                    VALUES  ( @STUDENTID , (SELECT NAME ||' '|| SURNAME as Name FROM STUDENT WHERE STUDENTID = @STUDENTID )  ) ";
+                                            ( StudentId  , Name  )
+                                    VALUES  ( @ID , (SELECT FIRSTNAME ||' '|| LASTNAME as Name FROM STUDENT WHERE ID = @ID )  ) ";
 
             await connection.ExecuteAsync(QueryInsert, new
             {
-                STUDENTID = request.StudentId,
+                ID = request.Id,
             });
 
             return true;
@@ -159,7 +150,7 @@ namespace Workshop01.BackEnd.View.Services;
         try
         {
             SelectCheckInList result = new();
-            string QueryCheckin = @" SELECT ID , STUDENTID , Name as UserName , timestamp from CHECKIN ";
+            string QueryCheckin = @" SELECT Id , StudentId, Name as UserName , timestamp from CHECKIN ";
 
             var dataCheckin = await connection.QueryAsync<SelectCheckInModel>(QueryCheckin);
 

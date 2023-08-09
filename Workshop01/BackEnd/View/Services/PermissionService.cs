@@ -22,9 +22,9 @@ namespace Workshop01.BackEnd.View.Services;
         {
             LoginList result = new();
 
-            string queryLogin = @"  SELECT studentId  , NAME ||' '|| SURNAME as studentname , EMAIL  FROM STUDENT WHERE STUDENTID = @STUDENTID  AND PASSWORD = @PASSWORD ";
+            string queryLogin = @"  SELECT Id  , FIRSTNAME ||' '|| LASTNAME as studentname , EMAIL  FROM STUDENT WHERE  EMAIL = @USERNAME  AND PASSWORD = @PASSWORD ";
 
-            var dataLogin = await connection.QueryAsync<LoginModel>(queryLogin , new { STUDENTID  = request.StudentId , PASSWORD = request.PassWord });
+            var dataLogin = await connection.QueryAsync<LoginModel>(queryLogin , new { USERNAME = request.UserName , PASSWORD = request.PassWord });
 
             if(dataLogin.Count() > 0 )
             {

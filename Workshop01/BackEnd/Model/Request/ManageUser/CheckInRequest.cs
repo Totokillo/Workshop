@@ -12,6 +12,7 @@
 
     public class SelectCheckInRequest
 {
+    public string Email { get; set; }
 
 }
 

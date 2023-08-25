@@ -34,12 +34,13 @@ const LoginPage = () => {
         axios.post(API_URL + '/Permission/LoginPermission', request).then(function (response) {
             console.log("response : ", response);
             if (response.data.success === true) {
+                // localStorage.setItem("userInfo", response.data.responseObject.dataUser[0])
                 navigate('/home')
             }
             else {
                 Swal.fire({
                     title: 'Warning!',
-                    text: response.message,
+                    text: response.data.message,
                     icon: 'warning',
                     confirmButtonText: 'Ok'
                 })

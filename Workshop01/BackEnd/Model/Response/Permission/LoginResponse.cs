@@ -4,12 +4,12 @@
     {
     }
 
-    public class LoginList
-    {
-        public List<LoginModel> dataUser { get; set; } = new();
-    }
+    //public class LoginList
+    //{
+    //    public List<LoginList> dataUser { get; set; } = new();
+    //}
 
-    public class LoginModel
+    public class LoginList
     {
         public int Id { get; set; }  
         public string StudentName { get; set; } = string.Empty;

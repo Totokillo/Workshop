@@ -5,12 +5,12 @@
 
     }
 
-    public class ManageUserList
-{
-    public List<ManageUserModel> dataUser { get; set; } = new();
-}
+//    public class ManageUserList
+//{
+//    public List<ManageUserList> dataUser { get; set; } = new();
+//}
 
-    public class ManageUserModel
+    public class ManageUserList
 {
     public int id { get; set; }
     public string UserName { get; set; } = string.Empty;

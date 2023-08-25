@@ -24,11 +24,13 @@ namespace Workshop01.BackEnd.View.Services;
 
             string queryLogin = @"  SELECT Id  , FIRSTNAME ||' '|| LASTNAME as studentname , EMAIL  FROM STUDENT WHERE  EMAIL = @USERNAME  AND PASSWORD = @PASSWORD ";
 
-            var dataLogin = await connection.QueryAsync<LoginModel>(queryLogin , new { USERNAME = request.UserName , PASSWORD = request.PassWord });
+            var dataLogin = await connection.QueryFirstOrDefaultAsync<LoginList>(queryLogin , new { USERNAME = request.Email , PASSWORD = request.PassWord });
 
-            if(dataLogin.Count() > 0 )
+            if(dataLogin is not null )
             {
-                result.dataUser = dataLogin.ToList();
+                result.Id = dataLogin.Id;
+                result.StudentName = dataLogin.StudentName;
+                result.Email = dataLogin.Email;
             }else
             {
                 throw new Exception("ไม่มี User นี้ในระบบ");

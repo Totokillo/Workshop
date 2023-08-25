@@ -166,7 +166,7 @@ namespace Workshop01.BackEnd.View.Services
                 var dataCheckin = await connection.QueryAsync<SelectCheckInModel>(QueryCheckin, new
                 {
                     NAME = request.Name,
-                    TIMESTAMP = request.CheckInDate.Value.ToString("yyyy-MM-dd")
+                    TIMESTAMP = request.CheckInDate.HasValue ? request.CheckInDate.Value.ToString("yyyy-MM-dd"): (String?)null
                 }) ;
 
                 result.dataCheckIn = dataCheckin.ToList();

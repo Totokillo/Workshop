@@ -1,9 +1,10 @@
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
-import { Home } from "./components/Home";
 import { Layout } from './components/Layout';
 import Login from "./pages/login";
 import Register from "./pages/register";
+import Home from "./pages/home";
+import Profile from "./pages/profile";
 
 const AppRoutes = [
   {
@@ -17,6 +18,14 @@ const AppRoutes = [
   {
     path: '/register',
     element: <Register />
+  },
+  {
+    path: '/home',
+    element: <Layout><Home /></Layout>
+  },
+  {
+    path: '/profile',
+    element: <Layout><Profile /></Layout>
   },
   {
     path: '/counter',

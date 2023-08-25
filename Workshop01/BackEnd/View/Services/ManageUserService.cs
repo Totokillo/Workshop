@@ -65,13 +65,16 @@ namespace Workshop01.BackEnd.View.Services
                 string QuerySelect = @" SELECT ID  , FirstName ||' '|| LastName as Username , Email  , BirthDay FROM STUDENT WHERE ID = @ID ";
 
 
-                var DataSelect = await connection.QueryAsync<ManageUserModel>(QuerySelect, new
+                var DataSelect = await connection.QueryFirstOrDefaultAsync<ManageUserList>(QuerySelect, new
                 {
                     ID = request.Id,
                 });
 
+                result.id = DataSelect.id;
+                result.UserName = DataSelect.UserName;
+                result.Email = DataSelect.Email;
+                result.BirthDay = DataSelect.BirthDay;
 
-                result.dataUser = DataSelect.ToList();
                 return result;
             }
             catch (Exception ex) { throw; }

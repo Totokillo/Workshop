@@ -22,7 +22,7 @@ namespace Workshop01.BackEnd.View.Services;
         {
             LoginList result = new();
 
-            string queryLogin = @"  SELECT Id  , FIRSTNAME ||' '|| LASTNAME as studentname , EMAIL  FROM STUDENT WHERE  EMAIL = @USERNAME  AND PASSWORD = @PASSWORD ";
+            string queryLogin = @"  SELECT Id  , FIRSTNAME ||' '|| LASTNAME as studentname , FirstName, LastName, EMAIL  FROM STUDENT WHERE  EMAIL = @USERNAME  AND PASSWORD = @PASSWORD ";
 
             var dataLogin = await connection.QueryFirstOrDefaultAsync<LoginList>(queryLogin , new { USERNAME = request.Email , PASSWORD = request.PassWord });
 
@@ -30,10 +30,12 @@ namespace Workshop01.BackEnd.View.Services;
             {
                 result.Id = dataLogin.Id;
                 result.StudentName = dataLogin.StudentName;
+                result.FirstName = dataLogin.FirstName;
+                result.LastName = dataLogin.LastName;
                 result.Email = dataLogin.Email;
             }else
             {
-                throw new Exception("ไม่มี User นี้ในระบบ");
+                throw new Exception("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
             }
 
             return result;

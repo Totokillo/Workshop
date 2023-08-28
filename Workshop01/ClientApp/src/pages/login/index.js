@@ -28,27 +28,29 @@ const LoginPage = () => {
 
     const handleOnSubmit = (values) => {
         let request = {
-            email: values.email,
-            password: values.password,
+            request: {
+                email: values.email,
+                password: values.password,
+            }
         }
         axios.post(API_URL + '/Permission/LoginPermission', request).then(function (response) {
             console.log("response : ", response);
             if (response.data.success === true) {
-                // localStorage.setItem("userInfo", response.data.responseObject.dataUser[0])
+                localStorage.setItem("userInfo", JSON.stringify(response.data.responseObject))
                 navigate('/home')
             }
             else {
                 Swal.fire({
-                    title: 'Warning!',
+                    title: 'แจ้งเตือน',
                     text: response.data.message,
                     icon: 'warning',
-                    confirmButtonText: 'Ok'
+                    confirmButtonText: 'ปิด'
                 })
             }
         }).catch(function (error) {
             console.log("error : ", error);
             Swal.fire({
-                title: 'Error!',
+                title: 'แจ้งเตือน',
                 text: error.message,
                 icon: 'error',
                 confirmButtonText: 'Ok'
@@ -63,13 +65,13 @@ const LoginPage = () => {
                     <div className="card-body">
                         <form onSubmit={formik.handleSubmit}>
                             <div className="col-12 text-center m-4">
-                                <h1>Check-in System</h1>
+                                <h1>ระบบ Check-in เข้าเรียน</h1>
                             </div>
                             <div className="col-12 text-center mb-4">
                                 <h2>Login</h2>
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="email" className="form-label">Email</label>
+                                <label htmlFor="email" className="form-label">อีเมล</label>
                                 <input
                                     id="email"
                                     name="email"
@@ -81,7 +83,7 @@ const LoginPage = () => {
                                 {formik.touched.email && formik.errors.email && <small className="text-danger">{formik.errors.email}</small>}
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="password" className="form-label">Password</label>
+                                <label htmlFor="password" className="form-label">รหัสผ่าน</label>
                                 <input
                                     id="password"
                                     name="password"
@@ -94,7 +96,7 @@ const LoginPage = () => {
                             </div>
 
                             <div className="col-12 text-center mb-3 mt-5">
-                                <button type="submit" className="btn btn-primary">Login</button>
+                                <button type="submit" className="btn btn-primary">เข้าสู่ระบบ</button>
                             </div>
                             <div className="col-12 text-center">
                                 <Link to="/register" className="">Register</Link>

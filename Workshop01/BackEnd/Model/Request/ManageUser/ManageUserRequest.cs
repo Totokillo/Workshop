@@ -7,7 +7,7 @@
 
     public class InsertManageUserRequest
 {
-    public string FisrtName { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string? Email { get; set; } = string.Empty;
     public string PassWord { get; set; } = string.Empty;
@@ -17,7 +17,7 @@
 public class UpdateManageUserRequest
 {
     public int Id { get; set; }
-    public string? FisrtName { get; set; } = string.Empty;
+    public string? FirstName { get; set; } = string.Empty;
     public string? LastName { get; set; } = string.Empty;
     public string? Email { get; set; } = string.Empty;
     public DateTime? BirthDay { get; set; }

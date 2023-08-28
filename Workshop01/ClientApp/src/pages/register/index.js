@@ -11,11 +11,11 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     const SignupSchema = Yup.object().shape({
-        firstName: Yup.string().required('Fisrt Name is Required'),
-        lastName: Yup.string().required('Last Name is Required'),
-        email: Yup.string().email('Invalid Email').required('Email is Required'),
-        birthDay: Yup.string().required('Birth Day is Required'),
-        password: Yup.string().required('Password is Required'),
+        firstName: Yup.string().required('กรุณากรอกชื่อ'),
+        lastName: Yup.string().required('กรุณากรอกนามสกุล'),
+        email: Yup.string().email('อีเมลไม่ถูกต้อง').required('กรุณากรอกอีเมล'),
+        birthDay: Yup.string().required('กรุณาเลือกวันเดือนปีเกิด(ค.ศ.)'),
+        password: Yup.string().required('กรุณากรอกรหัสผ่าน'),
     });
 
     const formik = useFormik({
@@ -34,17 +34,20 @@ const RegisterPage = () => {
 
     const handleOnSubmit = (values) => {
         let request = {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            birthDay: values.birthDay,
-            password: values.password,
+            request: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                birthDay: values.birthDay,
+                password: values.password,
+            }
         }
         axios.post(API_URL + '/ManageUser/InsertManageUser', request).then(function (response) {
             console.log("response : ", response);
             if (response.data.success === true) {
                 Swal.fire({
-                    title: 'Success',
+                    title: 'สำเร็จ',
+                    text: 'สมัครสมาชิกสำเร็จ',
                     icon: "success",
                     confirmButtonText: 'Ok',
                 }).then((result) => {
@@ -55,8 +58,8 @@ const RegisterPage = () => {
             }
             else {
                 Swal.fire({
-                    title: 'Warning!',
-                    text: response.message,
+                    title: 'แจ้งเตือน',
+                    text: response.data.message,
                     icon: 'warning',
                     confirmButtonText: 'Ok'
                 })
@@ -64,7 +67,7 @@ const RegisterPage = () => {
         }).catch(function (error) {
             console.log("error : ", error);
             Swal.fire({
-                title: 'Error!',
+                title: 'แจ้งเตือน',
                 text: error.message,
                 icon: 'error',
                 confirmButtonText: 'Ok'
@@ -85,7 +88,7 @@ const RegisterPage = () => {
 
                             <div className="row mb-2">
                                 <div className="col-6">
-                                    <label htmlFor="firstName" className="form-label">Fisrt Name</label>
+                                    <label htmlFor="firstName" className="form-label">ชื่อ</label>
                                     <input
                                         id="firstName"
                                         name="firstName"
@@ -97,7 +100,7 @@ const RegisterPage = () => {
                                     {formik.touched.firstName && formik.errors.firstName && <small className="text-danger">{formik.errors.firstName}</small>}
                                 </div>
                                 <div className="col-6">
-                                    <label htmlFor="lastName" className="form-label">Last Name</label>
+                                    <label htmlFor="lastName" className="form-label">นามสกุล</label>
                                     <input
                                         id="lastName"
                                         name="lastName"
@@ -112,7 +115,7 @@ const RegisterPage = () => {
 
                             <div className="row mb-2">
                                 <div className="col-6">
-                                    <label htmlFor="email" className="form-label">Email</label>
+                                    <label htmlFor="email" className="form-label">อีเมล</label>
                                     <input
                                         id="email"
                                         name="email"
@@ -124,7 +127,7 @@ const RegisterPage = () => {
                                     {formik.touched.email && formik.errors.email && <small className="text-danger">{formik.errors.email}</small>}
                                 </div>
                                 <div className="col-6">
-                                    <label htmlFor="birthDay" className="form-label">Birth Day</label>
+                                    <label htmlFor="birthDay" className="form-label">วันเดือนปีเกิด(ค.ศ.)</label>
                                     <input
                                         id="birthDay"
                                         name="birthDay"
@@ -139,7 +142,7 @@ const RegisterPage = () => {
 
                             <div className="row mb-2">
                                 <div className="col-6">
-                                    <label htmlFor="password" className="form-label">Password</label>
+                                    <label htmlFor="password" className="form-label">รหัสผ่าน</label>
                                     <input
                                         id="password"
                                         name="password"
@@ -147,13 +150,14 @@ const RegisterPage = () => {
                                         onChange={formik.handleChange}
                                         value={formik.values.password}
                                         className="form-control"
+                                        autoComplete="new-password"
                                     />
                                     {formik.touched.password && formik.errors.password && <small className="text-danger">{formik.errors.password}</small>}
                                 </div>
                             </div>
 
                             <div className="col-12 text-center mb-3 mt-5">
-                                <button type="submit" className="btn btn-primary">Register</button>
+                                <button type="submit" className="btn btn-primary">สมัครสมาชิก</button>
                             </div>
                             <div className="col-12 text-center">
                                 <Link to="/login" className="">Login</Link>

@@ -12,6 +12,7 @@
 
     public class SelectCheckInRequest
 {
+    public int Id { get; set; }
     public string? Name { get; set; } = string.Empty;
     public DateOnly? CheckInDate { get; set; }
 }

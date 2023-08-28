@@ -42,7 +42,7 @@ namespace Workshop01.BackEnd.View.Services
 
                 await connection.ExecuteAsync(QueryInsert, new
                 {
-                    FIRSTNAME = request.FisrtName,
+                    FIRSTNAME = request.FirstName,
                     LASTNAME = request.LastName,
                     EMAIL = request.Email,
                     PASSWORD = request.PassWord,
@@ -62,7 +62,7 @@ namespace Workshop01.BackEnd.View.Services
             {
                 ManageUserList result = new();
 
-                string QuerySelect = @" SELECT ID  , FirstName ||' '|| LastName as Username , Email  , BirthDay FROM STUDENT WHERE ID = @ID ";
+                string QuerySelect = @" SELECT ID  , FirstName ||' '|| LastName as Username , FirstName, LastName, Email  , BirthDay FROM STUDENT WHERE ID = @ID ";
 
 
                 var DataSelect = await connection.QueryFirstOrDefaultAsync<ManageUserList>(QuerySelect, new
@@ -72,8 +72,10 @@ namespace Workshop01.BackEnd.View.Services
 
                 result.id = DataSelect.id;
                 result.UserName = DataSelect.UserName;
+                result.FirstName = DataSelect.FirstName;
+                result.LastName = DataSelect.LastName;
                 result.Email = DataSelect.Email;
-                result.BirthDay = DataSelect.BirthDay;
+                result.BirthDay = DataSelect.BirthDay.Split(" ")[0] ?? "";
 
                 return result;
             }
@@ -95,7 +97,7 @@ namespace Workshop01.BackEnd.View.Services
 
                 await connection.ExecuteAsync(QueryUpdate, new
                 {
-                    FIRSTNAME = request.FisrtName,
+                    FIRSTNAME = request.FirstName,
                     LASTNAME = request.LastName,
                     EMAIL = request.Email,
                     BIRTHDAY = request.BirthDay,
@@ -155,7 +157,7 @@ namespace Workshop01.BackEnd.View.Services
             try
             {
                 SelectCheckInList result = new();
-                string QueryCheckin = @" SELECT Id , StudentId, Name as UserName , timestamp from CHECKIN where 1=1 ";
+                string QueryCheckin = @" SELECT Id , StudentId, Name as UserName , timestamp from CHECKIN where 1=1 And StudentId = @ID ";
 
                 if (request.Name is not null)
                 {
@@ -168,6 +170,7 @@ namespace Workshop01.BackEnd.View.Services
 
                 var dataCheckin = await connection.QueryAsync<SelectCheckInModel>(QueryCheckin, new
                 {
+                    ID = request.Id,
                     NAME = request.Name,
                     TIMESTAMP = request.CheckInDate.HasValue ? request.CheckInDate.Value.ToString("yyyy-MM-dd"): (String?)null
                 }) ;

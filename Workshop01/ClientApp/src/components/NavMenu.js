@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './NavMenu.css';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
-  constructor (props) {
+  constructor(props) {
     super(props);
-
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true
     };
   }
 
-  toggleNavbar () {
+  toggleNavbar() {
     this.setState({
       collapsed: !this.state.collapsed
     });
@@ -40,6 +39,9 @@ export class NavMenu extends Component {
               </NavItem> */}
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link}className="text-dark" to="/">Logout</NavLink>
               </NavItem>
             </ul>
           </Collapse>

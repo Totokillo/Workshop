@@ -1,39 +1,24 @@
 import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Layout } from './components/Layout';
-import Login from "./pages/login";
-import Register from "./pages/register";
-import Home from "./pages/home";
-import Profile from "./pages/profile";
+import { Home } from './components/Home';
 
 const AppRoutes = [
   {
     index: true,
-    element: <Login />
-  },
-  {
-    path: '/login',
-    element: <Login />
-  },
-  {
-    path: '/register',
-    element: <Register />
+    element: <Home />
   },
   {
     path: '/home',
-    element: <Layout><Home /></Layout>
-  },
-  {
-    path: '/profile',
-    element: <Layout><Profile /></Layout>
+    element: <Home />
   },
   {
     path: '/counter',
-    element: <Layout><Counter /></Layout>
+    element: <Counter />
   },
   {
     path: '/fetch-data',
-    element: <Layout><FetchData /></Layout>
+    element: <FetchData />
   }
 ];
 
